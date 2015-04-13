@@ -33,7 +33,7 @@ class Admin extends CI_Controller
         $all = $this->project_model->get_all_projects();
         $num = count($all);
         for ($i = 0; $i < $num; $i++) {
-            $this->project_model->delete_project($all[$i]['id']);
+            $this->project_model->delete_all_project($all[$i]['id']);
         }
                 $this->dash();
 
@@ -220,11 +220,13 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         //if($mode == 0)//create
         //    $this->project_model->register_project($name,$description,$news,$news_title,$people,$pub_title,$author,$magzine);
         //else
-        $transfer_id = $this->input->post('transfer_id');
-        //$this->project_model->update_project($transfer_id,$name,$description,$news,$news_title,$people,$pub_title,$first_author,$magzine,$magzine_link,$link,$info,$fellow,$fellow_link);
-        $this->project_model->delete_project($transfer_id);
-        $this->project_model->register_project($name, $description, $news, $news_title, $people, $pub_title, $first_author, $pre_magzine, $magzine, $magzine_link, $link, $info, $fellow);
-                $this->dash();
+        $pj_id = $this->input->post('transfer_id');
+        $pj_order = $this->project_model->find_order($pj_id);
+        // $this->project_model->delete_project($pj_id, $pj_order);
+        // $this->project_model->register_project($name, $description, $news, $news_title, $people, $pub_title, $first_author, $pre_magzine, $magzine, $magzine_link, $link, $info, $fellow);
+        $this->project_model->update_project($pj_id,$name, $description, $news, $news_title, $people, $pub_title, $first_author, $pre_magzine, $magzine, $magzine_link, $link, $info, $fellow);
+        
+        $this->dash();
     }
 
     public function update_project()
@@ -248,7 +250,9 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
     public function delete_project()
     {
         $pj_id = $this->input->post('pj_id');
-        $this->project_model->delete_project($pj_id);
+        $pj_order = $this->project_model->find_order($pj_id);
+        $this->project_model->delete_project($pj_id, $pj_order);
+        $this->project_model->empty_current_table();
         $this->dash();
     }
 

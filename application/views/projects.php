@@ -16,7 +16,7 @@
         <div class="span9">
             <h1>Current Projects</h1>
             <?php
-            $cur_projects = $this->db->select('*')->from('projects')->where('status', 'current')->get()->result_array();
+            $cur_projects = $this->db->select('*')->from('projects')->where('status', 'current')->order_by('order')->get()->result_array();
             ?>
             <ul>
                 <?php foreach ($cur_projects as $num => $project) : ?>
@@ -46,15 +46,12 @@
                     </p>
                 </h2>
                 <br>
-                <?php if (empty($people)) { ?>
+                <?php $id = $project['id']; ?>
+                <?php $people = $this->db->select('*')->from('people')->where('pj_id', $id)->get()->result_array() ?>
+                <?php if (!empty($people[0]['name']) ) :?> 
                     <p><b><font size="2" face="Arial">People:</font></b>
-                    <?php $id = $project['id'];
-                    $people = $this->db->select('*')->from('people')->where('pj_id', $id)->get()->result_array();
-                    foreach ($people as $person) {
-                        echo $person['name'];
-                    }
-                    ?>
-                <?php } ?>
+                    <?php echo $people[0]['name']; ?>
+                <?php endif?>
                 </p>
                 <p>
                     <?php echo $project['description'] ?>
@@ -70,11 +67,12 @@
                         <br>
                     <?php endforeach ?>
                 </p>
-                <p><b><font size="3" face="Arial">Publications:</font></b></p>
+                
                 <?php $id = $project['id'];
-                $publications = $this->db->select('*')->from('publication')->where('pj_id', $id)->get()->result_array();
-                foreach ($publications as $publication):
-                    ?>
+                $publications = $this->db->select('*')->from('publication')->where('pj_id', $id)->get()->result_array();?>
+                <?php if (!empty($publications[0]['id'])) :?>
+                <p><b><font size="3" face="Arial">Publications:</font></b></p>
+                <?php foreach ($publications as $publication): ?>
                     <li>
                         <p style="margin-left: 4px; margin-top: 20px; margin-bottom: 20px;">
                             <b><?php echo $publication['first_author'] ?></b>
@@ -87,6 +85,7 @@
                             <?php echo $publication['info']?>
                         </p></li>
                 <?php endforeach ?>
+                <?php endif ?>
             <?php endforeach ?>
 
             </i></i></div>
