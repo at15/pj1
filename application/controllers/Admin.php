@@ -35,6 +35,8 @@ class Admin extends CI_Controller
         for ($i = 0; $i < $num; $i++) {
             $this->project_model->delete_project($all[$i]['id']);
         }
+                $this->dash();
+
     }
 
     public function login()
@@ -100,6 +102,8 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         $this->Initial->initial_des('');
         $this->Initial->initial_des('');
         */
+                $this->dash();
+
 
     }
 
@@ -146,6 +150,8 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         $content = $this->input->post('content');
         $id= $this->input->post('id');
         $this->project_model->register_news($title,$content,$id);
+        $this->dash();
+
     }
     public function register_publications()
     {
@@ -159,6 +165,7 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         $fellow = $this->input->post('fellow');
         $id= $this->input->post('id');
         $this->project_model->register_publications($title,$link,$magzine,$magzine_link,$info,$pre_magzine,$author,$fellow,$id);
+        $this->dash();
     }
     public function create_publication()
     {
@@ -189,6 +196,7 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         $info = $this->input->post('info');
         //if($mode == 0)//create
         $this->project_model->register_project($name, $description, $news, $news_title, $people, $pub_title, $first_author, $pre_magzine, $magzine, $magzine_link, $link, $info, $fellow);
+                $this->dash();
         //else{
         //    $this->project_model->update_project($name,$description,$news,$news_title,$people,$pub_title,$author,$magzine);
     }
@@ -216,6 +224,7 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
         //$this->project_model->update_project($transfer_id,$name,$description,$news,$news_title,$people,$pub_title,$first_author,$magzine,$magzine_link,$link,$info,$fellow,$fellow_link);
         $this->project_model->delete_project($transfer_id);
         $this->project_model->register_project($name, $description, $news, $news_title, $people, $pub_title, $first_author, $pre_magzine, $magzine, $magzine_link, $link, $info, $fellow);
+                $this->dash();
     }
 
     public function update_project()
@@ -240,6 +249,7 @@ DBSeer is now accepted in CIDR\'s Outrageous Ideas and Vision Track. I am lookin
     {
         $pj_id = $this->input->post('pj_id');
         $this->project_model->delete_project($pj_id);
+        $this->dash();
     }
 
     public function delete_people()
